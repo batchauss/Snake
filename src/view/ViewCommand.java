@@ -4,6 +4,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import controller.*;
+import etat.Etat;
+import etat.EtatStart;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,19 +18,24 @@ public class ViewCommand implements Observateur{
 	//variable de mise a jour des tours
 	public int turn_update;
 	//controleur de ViewCommand
-	public ControllerSimpleGame absC ;
+	public AbstractController absC ;
 	JLabel texte = new JLabel();
+	JFrame jFrame =new JFrame();
 	
-	public ViewCommand (Observable obs, ControllerSimpleGame a) {
+	Etat etat = new EtatStart(this); // trois états possibles ici : start(restart) / play / pause
+	
+	public ViewCommand (Observable obs, AbstractController a) {
 		obs.enregistrerObservateur(this);
 		this.absC=a;
 	}
 	
-	 JFrame jFrame =new JFrame();
 	
-	 public void commande() {
-		
-		 
+	public void setEtat (Etat e) {
+		etat=e;
+	}
+	
+	public void commande() {
+				 
 		JPanel panel_button = new JPanel();
 		JPanel panel_slide_text = new JPanel();
 		 
@@ -75,39 +82,29 @@ public class ViewCommand implements Observateur{
 		//ajout d'écouteurs sur les différents composants	
 		restartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				absC.restart();	
-				restartButton.setEnabled(false);
-				playButton.setEnabled(true);
-				pauseButton.setEnabled(false);
+				etat.restart(absC, restartButton, playButton, stepButton, pauseButton);
 			}});
 		
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				absC.play();
-				restartButton.setEnabled(true);
-				pauseButton.setEnabled(true);
-				playButton.setEnabled(false);
+				etat.play(absC, restartButton, playButton, stepButton, pauseButton);
 			}});
 		
 		stepButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				absC.step();
+				etat.step(absC);
 			}});
 		
 		pauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				absC.pause();	
-				playButton.setEnabled(true);
-				pauseButton.setEnabled(false);
+				etat.pause(absC, restartButton, playButton, stepButton, pauseButton);
 			}});
 		
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				absC.setSpeed(slider.getValue());			
 			}});
-		
-		
-		
+			
     	texte.setText("Turn: "+String.valueOf(turn_update));
     	texte.setHorizontalAlignment(JLabel.CENTER);
         texte.setVerticalAlignment(JLabel.CENTER);
@@ -124,10 +121,8 @@ public class ViewCommand implements Observateur{
 	public void actualiser(int turn) {
 		turn_update=turn;
 		texte.setText("Turn: "+ turn_update);
-		System.out.println( "Nouveau tour( interface graphique ViewCommand  ):" + turn);
-		
-		
+		System.out.println( "Nouveau tour( interface graphique ViewCommand  ):" + turn);			
 	}
-	
-
 }
+
+

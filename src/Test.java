@@ -1,11 +1,11 @@
-import controller.ControllerSimpleGame;
+import controller.ControllerSnakeGame;
 import model.*;
 
 public class Test {
 	
 	public static void main(String[] args) throws Exception
 	{
-		Game g = new SimpleGame(10);
+		Game g = new SnakeGame(10);
 		/*ViewSimpleGame vg = new ViewSimpleGame(g);
 		ViewCommand com = new ViewCommand(g);
 		vg.viewInterface();
@@ -14,7 +14,9 @@ public class Test {
 		g.step();
 		g.run();  */
 		
-		ControllerSimpleGame csg = new ControllerSimpleGame(g);
+		InputMap im = new InputMap( "./layouts/alone.lay");
+		
+		ControllerSnakeGame csg = new ControllerSnakeGame(g,im);
 		csg.restart();
 		
 	}

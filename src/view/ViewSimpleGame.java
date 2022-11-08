@@ -10,21 +10,17 @@ public class ViewSimpleGame implements Observateur {
 
 	protected int turn_update;
     JFrame jFrame =new JFrame();
-    JLabel texte = new JLabel();
-    JPanel snakegame = new PanelSnakeGame(500, 500, null, null, null);
-    
+    JLabel texte = new JLabel();    
     public void viewInterface() {
     	
 
     	texte.setHorizontalAlignment(JLabel.CENTER);
         texte.setVerticalAlignment(JLabel.CENTER);
-        snakegame.setVisible(true);
     	texte.setVisible(true);
     	
     	jFrame.add(texte);
     	jFrame.setTitle("Game");
-    	//jFrame.add(snakegame);
-    	
+
     	jFrame.setSize(new Dimension(500,500));
     	Dimension windowSize = jFrame.getSize();
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
