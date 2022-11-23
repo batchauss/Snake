@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import agent.Agent;
 import controller.*;
 import etat.Etat;
 import etat.EtatStart;
@@ -10,8 +11,10 @@ import etat.EtatStart;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import observables.*;
+import utils.FeaturesItem;
 
 public class ViewCommand implements Observateur{
 	
@@ -118,10 +121,10 @@ public class ViewCommand implements Observateur{
     }
 
 	@Override
-	public void actualiser(int turn) {
+	public void actualiser(int turn, ArrayList<Agent> agent_list,ArrayList<FeaturesItem>items_list) {
 		turn_update=turn;
 		texte.setText("Turn: "+ turn_update);
-		System.out.println( "Nouveau tour( interface graphique ViewCommand  ):" + turn);			
+		//System.out.println( "Nouveau tour( interface graphique ViewCommand  ):" + turn);			
 	}
 }
 

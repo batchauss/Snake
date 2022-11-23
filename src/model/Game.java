@@ -1,7 +1,11 @@
 package model;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
+
 import observables.*;
+import strategyDeplacement.DeplacementStrategie;
 
 public abstract class Game implements Runnable, Observable{
 
@@ -10,9 +14,9 @@ public abstract class Game implements Runnable, Observable{
 	protected boolean isRunning;
 	protected Thread thread;
 	protected long time=1000;
+	protected DeplacementStrategie strat;
 	
-	
-	private List<Observateur> observateurs = new ArrayList<>();
+	protected List<Observateur> observateurs = new ArrayList<>();
 
 	public void enregistrerObservateur(Observateur observateur){
 		observateurs.add(observateur);
@@ -20,11 +24,13 @@ public abstract class Game implements Runnable, Observable{
 	public void supprimerObservateur(Observateur observateur){
 		observateurs.remove(observateur);
 	}
-	public void notifierObservateurs() {
-		for(int i = 0; i< observateurs.size(); i++) {
-			observateurs.get(i).actualiser(this.turn);
-			}
-	}
+	
+	
+	public abstract void notifierObservateurs() ;
+	
+	public abstract void initializeGame();
+	
+	public abstract void setStrategie(DeplacementStrategie s);
 	
 	//getters sur les éléments de Game 
 	public int getTurn() {
@@ -38,12 +44,12 @@ public abstract class Game implements Runnable, Observable{
 	//setters sur les éléments de Game
 	public void setTurn(int turn) {
 		this.turn=turn;
-		notifierObservateurs();
+		//notifierObservateurs();
 	}
 	
 	public void setTime(long time) {
 		this.time=time;
-		notifierObservateurs();
+		//notifierObservateurs();
 	}
 	
 	
@@ -56,7 +62,7 @@ public abstract class Game implements Runnable, Observable{
 	public void init() { 
 		turn =0;
 		isRunning=true;
-		//initializeGame(); à implementer plus tard
+		initializeGame();
 	}
 	
 	//tours du jeu pas a pas 
@@ -64,12 +70,13 @@ public abstract class Game implements Runnable, Observable{
 		if(gameContinue()) {
 			setTurn(turn +1);
 			takeTurn();
+			//notifierObservateurs();
 		}
 	}
 	
 	//vérifie si la partie continue ou si elle est terminée
 	public boolean gameContinue() {
-		if(turn==maxturn) {
+		if(turn>=maxturn) {
 			isRunning=false;
 			gameOver();
 			return false;
@@ -110,6 +117,7 @@ public abstract class Game implements Runnable, Observable{
 		isRunning =true;
 		thread= new Thread(this);
 		thread.start();
+		
 	}
 	
 }

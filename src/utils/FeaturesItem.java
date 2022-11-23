@@ -35,6 +35,7 @@ public class FeaturesItem {
 	public int getY() {
 		return y;
 	}
+	
 
 
 	public void setY(int y) {

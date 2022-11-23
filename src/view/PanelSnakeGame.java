@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+import agent.Agent;
 import utils.*;
 
 
@@ -22,7 +23,7 @@ import utils.*;
  */
 
 
-public class PanelSnakeGame extends JPanel{
+public class PanelSnakeGame extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +44,7 @@ public class PanelSnakeGame extends JPanel{
 	float[] contraste = { 0, 0, 0, 1.0f };
 
 
-	protected ArrayList<FeaturesSnake> featuresSnakes = new ArrayList<FeaturesSnake>();	
+	protected ArrayList<Agent> featuresSnakes = new ArrayList<Agent>();	
 	protected ArrayList<FeaturesItem> featuresItems = new ArrayList<FeaturesItem>();
 
 	
@@ -52,7 +53,7 @@ public class PanelSnakeGame extends JPanel{
 	
 	int cpt;
 
-	public PanelSnakeGame(int sizeX, int sizeY, boolean[][] walls, ArrayList<FeaturesSnake> featuresSnakes, ArrayList<FeaturesItem> featuresItems) {
+	public PanelSnakeGame(int sizeX, int sizeY, boolean[][] walls, ArrayList<Agent> featuresSnakes, ArrayList<FeaturesItem> featuresItems) {
 
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
@@ -111,7 +112,7 @@ public class PanelSnakeGame extends JPanel{
 	}
 
 
-	void paint_Snake(Graphics g, FeaturesSnake featuresSnake)
+	void paint_Snake(Graphics g, Agent featuresSnake)
 	{
 
 		ArrayList<Position> positions = featuresSnake.getPositions();
@@ -251,7 +252,7 @@ public class PanelSnakeGame extends JPanel{
 
 
 
-	public void updateInfoGame( ArrayList<FeaturesSnake> featuresSnakes , ArrayList<FeaturesItem> featuresItems) {
+	public void updateInfoGame( ArrayList<Agent> featuresSnakes , ArrayList<FeaturesItem> featuresItems) {
 		
 		this.featuresSnakes = featuresSnakes;
 		this.featuresItems = featuresItems;

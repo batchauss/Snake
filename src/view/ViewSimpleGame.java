@@ -1,7 +1,12 @@
 package view;
 import javax.swing.*;
+
+import agent.Agent;
 import observables.*;
+import utils.FeaturesItem;
+
 import java.awt.*;
+import java.util.ArrayList;
 public class ViewSimpleGame implements Observateur {
 	
 	public ViewSimpleGame (Observable obs) {
@@ -33,7 +38,7 @@ public class ViewSimpleGame implements Observateur {
 
    
 	@Override
-	public void actualiser(int turn) {
+	public void actualiser(int turn,ArrayList<Agent> agent_list,ArrayList<FeaturesItem>items_list) {
 		System.out.println( "Nouveau tour (interface graphique ViewSimpleGame) :" + turn);
 		turn_update=turn;
 		texte.setText("Turn: "+ turn_update);

@@ -9,11 +9,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
-
+import agent.Agent;
+import agent.Snake;
 import utils.AgentAction;
 import utils.ColorSnake;
 import utils.FeaturesItem;
-import utils.FeaturesSnake;
+
 import utils.ItemType;
 import utils.Position;
 
@@ -31,7 +32,7 @@ public class InputMap implements Serializable {
 	private boolean walls[][];
 
 
-	private ArrayList<FeaturesSnake> start_snakes ;
+	private ArrayList<Agent> start_snakes ;
 	private ArrayList<FeaturesItem> start_items ;
 
 	
@@ -75,7 +76,7 @@ public class InputMap implements Serializable {
 		int y=0;
 	
 		
-		start_snakes = new ArrayList<FeaturesSnake>();
+		start_snakes = new ArrayList<Agent>();
 		start_items = new ArrayList<FeaturesItem>();
 				
 		int id = 0;
@@ -100,7 +101,7 @@ public class InputMap implements Serializable {
 					pos.add(new Position(x,y));
 					
 					
-					start_snakes.add(new FeaturesSnake(pos, AgentAction.MOVE_DOWN,colorSnake[id%colorSnake.length], false, false));	
+					start_snakes.add(new Snake(pos, AgentAction.MOVE_DOWN,colorSnake[id%colorSnake.length], false, false));	
 					id++;
 				}
 				
@@ -167,7 +168,7 @@ public class InputMap implements Serializable {
 	}
 	
 	
-	public ArrayList<FeaturesSnake> getStart_snakes() {
+	public ArrayList<Agent> getStart_snakes() {
 		return start_snakes;
 	}
 

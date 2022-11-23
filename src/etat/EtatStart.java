@@ -15,7 +15,13 @@ public class EtatStart implements Etat {
 
 	@Override
 	public void restart(AbstractController abs ,JButton res, JButton pla, JButton ste, JButton pau) {
-		//le bouton restart est désactivé		
+		abs.restart();	
+		res.setEnabled(false);
+		pla.setEnabled(true);
+		ste.setEnabled(true);
+		pau.setEnabled(false);
+		abs.restart();	
+		viewcommand.setEtat(new EtatStart(viewcommand));				
 	}
 
 	@Override
