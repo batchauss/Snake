@@ -16,11 +16,10 @@ public class EtatStart implements Etat {
 	@Override
 	public void restart(AbstractController abs ,JButton res, JButton pla, JButton ste, JButton pau) {
 		abs.restart();	
-		res.setEnabled(false);
+		res.setEnabled(true);
 		pla.setEnabled(true);
 		ste.setEnabled(true);
 		pau.setEnabled(false);
-		abs.restart();	
 		viewcommand.setEtat(new EtatStart(viewcommand));				
 	}
 

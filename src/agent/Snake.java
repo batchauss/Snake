@@ -1,6 +1,7 @@
 package agent;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.InputMap;
 import strategyDeplacement.DeplacementStrategie;
@@ -54,31 +55,51 @@ public class Snake implements Agent{
 		if(isLegalMove(action) ){
 			switch (action) { 	
 				case MOVE_UP:
-					setPosition(pos.getX(),pos.getY()-1);
-					isLegalPos(action, im.get_walls());
+					setPosition(pos.getX(),pos.getY()-1);				
+					setLastAction(action);					
 					break;
 				case MOVE_DOWN:
 					setPosition(pos.getX(),pos.getY()+1);
-					isLegalPos(action, im.get_walls());
+					setLastAction(action);
 					break;
 				case MOVE_LEFT:
 					setPosition(pos.getX()-1,pos.getY());
-					isLegalPos(action, im.get_walls());
+					setLastAction(action);
 					break;
 				case MOVE_RIGHT:
 					setPosition(pos.getX()+1,pos.getY());
-					isLegalPos(action, im.get_walls());
+					setLastAction(action);
 					break;
 				//faire cas ou l'agent sort du plateau
-			}	
+			}
+		traverseCarte( im);
 		positions.add(0,pos);
 		positions.remove(positions.size()-1);
-		setLastAction(action);
+		isLegalPos(action, im.get_walls());
+		toucheSonCorps();
+		
 		}
+	}
+	 
+	public void traverseCarte(InputMap im) {
+		if(pos.getY()<0) {
+			setPosition(pos.getX(), pos.getY()+im.getSizeY());
+		}
+		if(pos.getY()>=im.getSizeY()) {
+			setPosition(pos.getX(), pos.getY()-im.getSizeY());
+		}
+
+		if(pos.getX()<0) {
+			setPosition(pos.getX()+im.getSizeX(), pos.getY());
+		}
+		if(pos.getX()>=im.getSizeX()) {
+			setPosition(pos.getX()-im.getSizeX(), pos.getY());
+		}
+		
 	}
 	
 	public boolean isLegalMove(AgentAction action) { //gestion du snake qui ne peut pas revenir en arriere
-		if(onlyHead)
+		if(!onlyHead)
 			switch (action) { 
 				case MOVE_UP:
 					if(getLastAction()==AgentAction.MOVE_DOWN) return false;
@@ -97,36 +118,51 @@ public class Snake implements Agent{
 	}
 	
 	public boolean isLegalPos(AgentAction action,boolean walls[][]) { //gestion des murs
-		switch (action) { 
-		case MOVE_UP:
-			if(walls[pos.getX()][pos.getY()-1]) {
+		if(!isInvincible) {
+			/*switch (action) { 	
+				case MOVE_UP:
+					if(walls[pos.getX()][pos.getY()-1]) {
+						isEliminated=true;
+						return false;
+					}
+					else return true;			
+				case MOVE_DOWN:
+					if(walls[pos.getX()][pos.getY()+1]){
+						isEliminated=true;
+						return false;
+					}
+					else return true;
+				case MOVE_LEFT:
+					if(walls[pos.getX()-1][pos.getY()]) {
+						isEliminated=true;
+						return false;
+					}
+					else return true;
+				case MOVE_RIGHT:
+					if(walls[pos.getX()+1][pos.getY()]) {
+						isEliminated=true;
+						return false;
+					}
+					else return true;
+			}*/
+			
+			if(   walls[pos.getX()][pos.getY()]) {
 				isEliminated=true;
 				return false;
 			}
-			else return true;			
-		case MOVE_DOWN:
-			if(walls[pos.getX()][pos.getY()+1]){
-				isEliminated=true;
-				return false;
-			}
-			else return true;
-		case MOVE_LEFT:
-			if(walls[pos.getX()-1][pos.getY()]) {
-				isEliminated=true;
-				return false;
-			}
-			else return true;
-		case MOVE_RIGHT:
-			if(walls[pos.getX()+1][pos.getY()]) {
-				isEliminated=true;
-				return false;
-			}
-			else return true;
 		}
 		return true;
 	}
 	
 	
+	public void toucheSonCorps() {
+		for(int i=1; i<positions.size();++i) {
+			if(pos.getX()==positions.get(i).getX() && pos.getY()==positions.get(i).getY()) {
+				isEliminated=true;
+				return;
+			}
+		}
+	}
 	
 	
 	public boolean elimination() {
@@ -184,13 +220,13 @@ public class Snake implements Agent{
 	public Position getLastPosition() {
 		switch (lastAction) { 
 		case MOVE_UP:
-			return new Position(pos.getX(),pos.getY()+1);			
+			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY()+1);			
 		case MOVE_DOWN:
-			return new Position(pos.getX(),pos.getY()-1);	
+			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY()-1);	
 		case MOVE_LEFT:
-			return new Position(pos.getX()+1,pos.getY());	
+			return new Position(positions.get(positions.size()-1).getX()+1,positions.get(positions.size()-1).getY());	
 		case MOVE_RIGHT:
-			return new Position(pos.getX()-1,pos.getY());	
+			return new Position(positions.get(positions.size()-1).getX()-1,positions.get(positions.size()-1).getY());	
 		default:
 			return pos;
 }
@@ -217,21 +253,48 @@ public class Snake implements Agent{
 	}
 
 	@Override
-	public void eatApple(ArrayList<FeaturesItem> items_list) {  //changer en eatItzm aves tous les items
+	public void eatItem(ArrayList<FeaturesItem> items_list) {  //changer en eatItzm aves tous les items
 		
 		for ( int i=0; i<items_list.size();++i) {
-			Position posPomme = new Position(items_list.get(i).getX(),items_list.get(i).getY());
-			System.out.println("position pomme "+items_list.get(i).getX() +" "+items_list.get(i).getY());
-			if(posPomme.getX() ==this.positions.get(0).getX() &&posPomme.getY() ==this.positions.get(0).getY()) { 
-				positions.add(getLastPosition());
-				items_list.remove(items_list.get(i));
+			Position posItem = new Position(items_list.get(i).getX(),items_list.get(i).getY());
+			System.out.println("position item "+items_list.get(i).getX() +" "+items_list.get(i).getY());
+			if(posItem.getX() ==this.positions.get(0).getX() && posItem.getY() == this.positions.get(0).getY() && !isSick) { 
 				
+				switch(items_list.get(i).getItemType()) {  //traitement des différents types d'items mangé par le snake
+				case APPLE:				
+						items_list.remove(items_list.get(i));
+						positions.add(getLastPosition());
+						onlyHead=false;				
+					break;
+				case BOX:
+					int[] values = {1,2};
+			        int randIndex = new Random().nextInt(2);
+			        int randItem= values[randIndex];
+			        
+			        if(randItem==1) {
+						items_list.remove(items_list.get(i));
+						isInvincible=true;
+			        }
+			        else if(randItem==2) {
+						items_list.remove(items_list.get(i));
+						isSick=true;
+			        }			        
+					break;
+				case INVINCIBILITY_BALL:
+					items_list.remove(items_list.get(i));
+					isInvincible=true;
+					break;
+				case SICK_BALL:
+					items_list.remove(items_list.get(i));
+					isSick=true;
+					break;
+				default:
+					break;				
+				}			
 			}
 		}
 	}
 
-
-	
 
 	
 }

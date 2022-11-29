@@ -8,12 +8,23 @@ public abstract class AbstractController {
 		this.g=g;
 	}
 	
-	public void restart() {	
+	public void start() {
 		g.init();
 		g.launch();
 		g.pause();
 		
 	}
+	
+	public void restart() {	/// a faire
+		g.init();
+		g.launch();
+		g.pause();
+		
+	}
+	
+	/*public void restart() {
+		g.restart();
+	} */
 	
 	public void step() {
 		g.step();

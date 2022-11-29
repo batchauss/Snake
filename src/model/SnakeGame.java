@@ -16,8 +16,8 @@ public class SnakeGame extends Game {
 	public Factory fabrique = new SnakeFactory();
 	ArrayList<Agent> agent_list= new ArrayList<Agent>();
 	ArrayList<FeaturesItem> items_list= new ArrayList<FeaturesItem>();
-	InputMap im;
 	JFrame frame =new JFrame();
+	
 
 	public SnakeGame(int maxturn ,InputMap im) {
 		super(maxturn);
@@ -39,11 +39,11 @@ public class SnakeGame extends Game {
 			for (int ag=0; ag<agent_list.size();++ag) {  //chaque agent effectue une action */
 				if(!agent_list.get(ag).elimination()) {
 					agent_list.get(ag).moveAgent(im);
-					agent_list.get(ag).eatApple( items_list);
+					agent_list.get(ag).eatItem( items_list);
 					//agent.InteractionEntreAgents(agent_list.get(0));
 					
 				}
-				else {
+				if(agent_list.get(ag).elimination()) {
 					agent_list.remove(agent_list.get(ag));
 					System.out.println("Agent éliminé !"); 
 					}	
@@ -54,9 +54,9 @@ public class SnakeGame extends Game {
 	
 	
 	
-	public void initializeGame() { //initialisation du jeu et récupération des éléments du layout
+	public void initializeGame(InputMap input) { //initialisation du jeu et récupération des éléments du layout
 		System.out.println("nb d'agents  "+agent_list.size());
-		 for( Agent f: im.getStart_snakes()) { 	//récuperation des agents snakes		 
+		 for( Agent f: input.getStart_snakes()) { 	//récuperation des agents snakes		 
 			 Snake s= fabrique.createAgent(f.getPositions(), f.getLastAction(), f.getColorSnake(), f.isInvincible(), f.isInvincible());
 			 
 			 s.setStrategy(strat);  //stratégie random pour le moment
@@ -65,7 +65,7 @@ public class SnakeGame extends Game {
 		 }
 		 
 		 System.out.println("nb d'agents  "+agent_list.size());
-		 for(FeaturesItem it : im.getStart_items()) { //récupérations des items
+		 for(FeaturesItem it : input.getStart_items()) { //récupérations des items
 			 items_list.add(it);			 
 		 }
 		 

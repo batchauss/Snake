@@ -2,7 +2,6 @@ package observables;
 
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 
 import agent.Agent;
 import utils.FeaturesItem;

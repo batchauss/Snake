@@ -62,6 +62,9 @@ public class ViewSnakeGame implements Observateur  {
 	    int dx = centerPoint.x - windowSize.width / 2 ;
 	    int dy = centerPoint.y - windowSize.height / 2 - 350;
 	    jFrame.setLocation(dx, dy);
+	    jFrame.toFront();
+	    //jFrame.requestFocus();
+	    jFrame.setAlwaysOnTop(true);
 	    jFrame.setVisible(true);
 	    
 	    

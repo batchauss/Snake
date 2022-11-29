@@ -26,7 +26,7 @@ public interface Agent {
 	public boolean elimination();
 	
 	public void InteractionEntreAgents( Agent agent2);
-	public void eatApple(ArrayList<FeaturesItem> items_list);
+	public void eatItem(ArrayList<FeaturesItem> items_list);
 	
 	
 }

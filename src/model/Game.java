@@ -2,7 +2,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
 
 import observables.*;
 import strategyDeplacement.DeplacementStrategie;
@@ -15,6 +14,8 @@ public abstract class Game implements Runnable, Observable{
 	protected Thread thread;
 	protected long time=1000;
 	protected DeplacementStrategie strat;
+	protected InputMap im;
+	protected InputMap imStart ;
 	
 	protected List<Observateur> observateurs = new ArrayList<>();
 
@@ -28,7 +29,7 @@ public abstract class Game implements Runnable, Observable{
 	
 	public abstract void notifierObservateurs() ;
 	
-	public abstract void initializeGame();
+	public abstract void initializeGame(InputMap input);
 	
 	public abstract void setStrategie(DeplacementStrategie s);
 	
@@ -62,7 +63,8 @@ public abstract class Game implements Runnable, Observable{
 	public void init() { 
 		turn =0;
 		isRunning=true;
-		initializeGame();
+		imStart=im;
+		initializeGame(im);
 	}
 	
 	//tours du jeu pas a pas 
@@ -70,7 +72,7 @@ public abstract class Game implements Runnable, Observable{
 		if(gameContinue()) {
 			setTurn(turn +1);
 			takeTurn();
-			//notifierObservateurs();
+
 		}
 	}
 	
@@ -117,6 +119,15 @@ public abstract class Game implements Runnable, Observable{
 		isRunning =true;
 		thread= new Thread(this);
 		thread.start();
+
+	}
+	
+	public void restart() {
+		turn =0;
+		isRunning=true;
+
+		initializeGame(imStart);
+		pause();
 		
 	}
 	

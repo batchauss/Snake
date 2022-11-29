@@ -68,7 +68,7 @@ public class ViewCommand implements Observateur{
 		panel_button.add(pauseButton);
 		
 		//boutons activés/désactivés au démarrage du jeu
-		restartButton.setEnabled(false);
+		//restartButton.setEnabled(false);
 		pauseButton.setEnabled(false);
 		
 		//gestion du slider

@@ -19,7 +19,7 @@ public class SimpleGame extends Game  {
 	}
 
 	@Override
-	public void initializeGame() {
+	public void initializeGame(InputMap input) {
 		// TODO Auto-generated method stub
 		
 	}
