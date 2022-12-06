@@ -1,7 +1,6 @@
 package agent;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import model.InputMap;
 import strategyDeplacement.DeplacementStrategie;
@@ -48,6 +47,12 @@ public class Snake implements Agent{
 		this.strategie=strat;
 	}
 	
+	@Override
+	public DeplacementStrategie getStrategy(){
+		return this.strategie;
+		
+	}
+	
 	 @Override
 	 public void moveAgent(InputMap im) {
 		AgentAction action =strategie.chooseAction();
@@ -70,14 +75,12 @@ public class Snake implements Agent{
 					setPosition(pos.getX()+1,pos.getY());
 					setLastAction(action);
 					break;
-				//faire cas ou l'agent sort du plateau
+
 			}
-		traverseCarte( im);
-		positions.add(0,pos);
-		positions.remove(positions.size()-1);
-		isLegalPos(action, im.get_walls());
-		toucheSonCorps();
-		
+			traverseCarte( im);
+			positions.add(0,pos);
+			isLegalPos(action, im.get_walls());
+			toucheSonCorps();
 		}
 	}
 	 
@@ -98,6 +101,7 @@ public class Snake implements Agent{
 		
 	}
 	
+	@Override
 	public boolean isLegalMove(AgentAction action) { //gestion du snake qui ne peut pas revenir en arriere
 		if(!onlyHead)
 			switch (action) { 
@@ -119,34 +123,8 @@ public class Snake implements Agent{
 	
 	public boolean isLegalPos(AgentAction action,boolean walls[][]) { //gestion des murs
 		if(!isInvincible) {
-			/*switch (action) { 	
-				case MOVE_UP:
-					if(walls[pos.getX()][pos.getY()-1]) {
-						isEliminated=true;
-						return false;
-					}
-					else return true;			
-				case MOVE_DOWN:
-					if(walls[pos.getX()][pos.getY()+1]){
-						isEliminated=true;
-						return false;
-					}
-					else return true;
-				case MOVE_LEFT:
-					if(walls[pos.getX()-1][pos.getY()]) {
-						isEliminated=true;
-						return false;
-					}
-					else return true;
-				case MOVE_RIGHT:
-					if(walls[pos.getX()+1][pos.getY()]) {
-						isEliminated=true;
-						return false;
-					}
-					else return true;
-			}*/
 			
-			if(   walls[pos.getX()][pos.getY()]) {
+			if(walls[pos.getX()][pos.getY()]) {
 				isEliminated=true;
 				return false;
 			}
@@ -157,7 +135,7 @@ public class Snake implements Agent{
 	
 	public void toucheSonCorps() {
 		for(int i=1; i<positions.size();++i) {
-			if(pos.getX()==positions.get(i).getX() && pos.getY()==positions.get(i).getY()) {
+			if( pos.getX()==positions.get(i).getX() && pos.getY()==positions.get(i).getY() ) {
 				isEliminated=true;
 				return;
 			}
@@ -192,7 +170,7 @@ public class Snake implements Agent{
 		return isInvincible;
 	}
 
-
+	@Override
 	public void setInvincible(boolean isInvincible) {
 		this.isInvincible = isInvincible;
 	}
@@ -201,7 +179,8 @@ public class Snake implements Agent{
 	public boolean isSick() {
 		return isSick;
 	}
-
+	
+	@Override
 	public void setSick(boolean isSick) {
 		this.isSick = isSick;
 	}
@@ -220,13 +199,13 @@ public class Snake implements Agent{
 	public Position getLastPosition() {
 		switch (lastAction) { 
 		case MOVE_UP:
-			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY()+1);			
+			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY());			
 		case MOVE_DOWN:
-			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY()-1);	
+			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY());	
 		case MOVE_LEFT:
-			return new Position(positions.get(positions.size()-1).getX()+1,positions.get(positions.size()-1).getY());	
+			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY());	
 		case MOVE_RIGHT:
-			return new Position(positions.get(positions.size()-1).getX()-1,positions.get(positions.size()-1).getY());	
+			return new Position(positions.get(positions.size()-1).getX(),positions.get(positions.size()-1).getY());	
 		default:
 			return pos;
 }
@@ -234,67 +213,34 @@ public class Snake implements Agent{
 	}
 
 	@Override
-	public void InteractionEntreAgents( Agent agent2) {  ///je sais pas si ca marche a revoir
-
-		for (Position pos : agent2.getPositions()) {
-			if(this.positions.get(0)==pos && this.positions.size()==agent2.getPositions().size() ) { // les 2 agents se rencontrent et sont de meme taille = elimination des 2
-				this.isEliminated=true;
-				agent2.setEliminated(true);
+	public void InteractionEntreAgents( ArrayList<Agent> agent_list) {  ///je sais pas si ca marche a revoir( parcourir liste agents 
+		
+		for (Agent ag : agent_list) { /// changer "pos" par les positions de l'autre (parcourir les positions)
+			if(!ag.equals(this)) {
+				for(Position p : ag.getPositions()) {
+					if(this.positions.get(0).getX()==p.getX() &&this.positions.get(0).getY()==p.getY() && this.positions.size()==ag.getPositions().size() ) { // les 2 agents se rencontrent et sont de meme taille = elimination des 2
+						this.isEliminated=true;
+						ag.setEliminated(true);
+					}
+					if(this.positions.get(0).getX()==p.getX() &&this.positions.get(0).getY()==p.getY() && this.positions.size()<ag.getPositions().size() ) { // les 2 agents se rencontrent et le 1er est plus petit = 1er eliminé
+						this.isEliminated=true;
+					}
+					if(this.positions.get(0).getX()==p.getX() &&this.positions.get(0).getY()==p.getY() && this.positions.size()>ag.getPositions().size() ) { // les 2 agents se rencontrent et le 2e est plus petit = 2eme eliminé
+						ag.setEliminated(true);
+					}
+				}
+				
 			}
-			if(this.positions.get(0)==pos && this.positions.size()<agent2.getPositions().size() ) { // les 2 agents se rencontrent et le 1er est plus petit = 1er eliminé
-				this.isEliminated=true;
-			}
-			if(this.positions.get(0)==pos && this.positions.size()>agent2.getPositions().size() ) { // les 2 agents se rencontrent et le 2e est plus petit = 2eme eliminé
-				agent2.setEliminated(true);
-			}
-			
 		}
 		
 	}
 
 	@Override
-	public void eatItem(ArrayList<FeaturesItem> items_list) {  //changer en eatItzm aves tous les items
-		
-		for ( int i=0; i<items_list.size();++i) {
-			Position posItem = new Position(items_list.get(i).getX(),items_list.get(i).getY());
-			System.out.println("position item "+items_list.get(i).getX() +" "+items_list.get(i).getY());
-			if(posItem.getX() ==this.positions.get(0).getX() && posItem.getY() == this.positions.get(0).getY() && !isSick) { 
-				
-				switch(items_list.get(i).getItemType()) {  //traitement des différents types d'items mangé par le snake
-				case APPLE:				
-						items_list.remove(items_list.get(i));
-						positions.add(getLastPosition());
-						onlyHead=false;				
-					break;
-				case BOX:
-					int[] values = {1,2};
-			        int randIndex = new Random().nextInt(2);
-			        int randItem= values[randIndex];
-			        
-			        if(randItem==1) {
-						items_list.remove(items_list.get(i));
-						isInvincible=true;
-			        }
-			        else if(randItem==2) {
-						items_list.remove(items_list.get(i));
-						isSick=true;
-			        }			        
-					break;
-				case INVINCIBILITY_BALL:
-					items_list.remove(items_list.get(i));
-					isInvincible=true;
-					break;
-				case SICK_BALL:
-					items_list.remove(items_list.get(i));
-					isSick=true;
-					break;
-				default:
-					break;				
-				}			
-			}
-		}
+	public void gotOnlyHead() {
+
+		onlyHead=false;
 	}
 
-
+	
 	
 }

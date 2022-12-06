@@ -1,6 +1,5 @@
 package model;
 
-import javax.swing.JFrame;
 
 import strategyDeplacement.DeplacementStrategie;
 
@@ -31,9 +30,11 @@ public class SimpleGame extends Game  {
 	}
 
 	@Override
-	public void setStrategie(DeplacementStrategie s) {
+	public void setStrategie(DeplacementStrategie s1,DeplacementStrategie s2) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

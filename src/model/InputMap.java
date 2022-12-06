@@ -20,7 +20,7 @@ import utils.Position;
 
 
 
-public class InputMap implements Serializable {
+public class InputMap implements Serializable,Cloneable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -39,6 +39,14 @@ public class InputMap implements Serializable {
 	private BufferedReader buffer;
 	
 	ColorSnake[] colorSnake = {ColorSnake.Green,ColorSnake.Red};
+	
+	public InputMap clone() {
+		try {
+			return (InputMap) super.clone();
+			} catch (Exception e) {
+				return null;		
+			}
+	}
 	
 
 	public InputMap(String filename) throws Exception{

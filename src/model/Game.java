@@ -13,9 +13,10 @@ public abstract class Game implements Runnable, Observable{
 	protected boolean isRunning;
 	protected Thread thread;
 	protected long time=1000;
-	protected DeplacementStrategie strat;
+	protected DeplacementStrategie stratJ1;
+	protected DeplacementStrategie stratJ2;
 	protected InputMap im;
-	protected InputMap imStart ;
+	//protected InputMap imStart ;
 	
 	protected List<Observateur> observateurs = new ArrayList<>();
 
@@ -31,7 +32,7 @@ public abstract class Game implements Runnable, Observable{
 	
 	public abstract void initializeGame(InputMap input);
 	
-	public abstract void setStrategie(DeplacementStrategie s);
+	public abstract void setStrategie(DeplacementStrategie s1,DeplacementStrategie s2);
 	
 	//getters sur les éléments de Game 
 	public int getTurn() {
@@ -45,12 +46,10 @@ public abstract class Game implements Runnable, Observable{
 	//setters sur les éléments de Game
 	public void setTurn(int turn) {
 		this.turn=turn;
-		//notifierObservateurs();
 	}
 	
 	public void setTime(long time) {
 		this.time=time;
-		//notifierObservateurs();
 	}
 	
 	
@@ -63,8 +62,7 @@ public abstract class Game implements Runnable, Observable{
 	public void init() { 
 		turn =0;
 		isRunning=true;
-		imStart=im;
-		initializeGame(im);
+		initializeGame(im); //////ICI LA ICI LA ICI
 	}
 	
 	//tours du jeu pas a pas 
@@ -91,6 +89,7 @@ public abstract class Game implements Runnable, Observable{
 	//affiche un message de fin de partie
 	public void gameOver() {
 		System.out.println("la partie est terminée ! ");
+		isRunning=false;
 	}
 	
 	public abstract void takeTurn();
@@ -107,7 +106,6 @@ public abstract class Game implements Runnable, Observable{
 			try {
 			Thread.sleep(time);
 				
-				//gameContinue();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -122,14 +120,7 @@ public abstract class Game implements Runnable, Observable{
 
 	}
 	
-	public void restart() {
-		turn =0;
-		isRunning=true;
 
-		initializeGame(imStart);
-		pause();
-		
-	}
 	
 }
 

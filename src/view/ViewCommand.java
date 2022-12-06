@@ -68,11 +68,11 @@ public class ViewCommand implements Observateur{
 		panel_button.add(pauseButton);
 		
 		//boutons activés/désactivés au démarrage du jeu
-		//restartButton.setEnabled(false);
+		restartButton.setEnabled(true);
 		pauseButton.setEnabled(false);
 		
 		//gestion du slider
-		JSlider slider = new JSlider(0, 10, 1);
+		JSlider slider = new JSlider(1, 10, 1);
 		slider.setPaintTrack(true); 
         slider.setPaintTicks(true); 
         slider.setPaintLabels(true); 
@@ -103,7 +103,7 @@ public class ViewCommand implements Observateur{
 				etat.pause(absC, restartButton, playButton, stepButton, pauseButton);
 			}});
 		
-		slider.addChangeListener(new ChangeListener() {
+		slider.addChangeListener( new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				absC.setSpeed(slider.getValue());			
 			}});
@@ -116,6 +116,7 @@ public class ViewCommand implements Observateur{
 		jFrame.setLayout(layout_global);
 		jFrame.add(panel_button);
 		jFrame.add(panel_slide_text);
+
 		jFrame.setSize(500, 350);
 		jFrame.setVisible(true);
     }
@@ -124,7 +125,7 @@ public class ViewCommand implements Observateur{
 	public void actualiser(int turn, ArrayList<Agent> agent_list,ArrayList<FeaturesItem>items_list) {
 		turn_update=turn;
 		texte.setText("Turn: "+ turn_update);
-		//System.out.println( "Nouveau tour( interface graphique ViewCommand  ):" + turn);			
+	
 	}
 }
 

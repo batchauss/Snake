@@ -15,26 +15,27 @@ public class DeplacementManuel implements DeplacementStrategie{
 		KeyListener key = new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-	
-				switch (e.getKeyCode())
-				{
-					case KeyEvent.VK_RIGHT:
-						action=AgentAction.MOVE_RIGHT;
-						break;
-					case KeyEvent.VK_LEFT:
-						action=AgentAction.MOVE_LEFT;
-						break;
-					case KeyEvent.VK_UP:
-						action=AgentAction.MOVE_UP;
-						break;
-					case KeyEvent.VK_DOWN:
-						action=AgentAction.MOVE_DOWN;
-						break;
-					default:
-						action=AgentAction.MOVE_RIGHT;
-						break;
-				}		
-			}
+
+					switch (e.getKeyCode())
+					{
+						case KeyEvent.VK_RIGHT:
+							action=AgentAction.MOVE_RIGHT;
+							break;
+						case KeyEvent.VK_LEFT:
+							action=AgentAction.MOVE_LEFT;
+							break;
+						case KeyEvent.VK_UP:
+							action=AgentAction.MOVE_UP;
+							break;
+						case KeyEvent.VK_DOWN:
+							action=AgentAction.MOVE_DOWN;
+							break;
+						default:
+							//action=AgentAction.MOVE_UP;
+							break;
+					}
+									
+				}
 
 			@Override
 			public void keyReleased(KeyEvent e) {}

@@ -15,16 +15,13 @@ public abstract class AbstractController {
 		
 	}
 	
-	public void restart() {	/// a faire
-		g.init();
-		g.launch();
-		g.pause();
+	public void restart() {
+		start();
 		
 	}
 	
-	/*public void restart() {
-		g.restart();
-	} */
+	
+	
 	
 	public void step() {
 		g.step();
@@ -39,6 +36,7 @@ public abstract class AbstractController {
 	}
 	
 	public void setSpeed(double speed) {
+		g.setTime(1000);
 		g.setTime((long) (g.getTime() /speed));
 	}
 }

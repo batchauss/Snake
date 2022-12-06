@@ -50,25 +50,30 @@ public class ViewSnakeGame implements Observateur  {
 	    
 	    jFrame.add(texte);
 	    jFrame.setTitle("Game");
-	    	
 	    plateau.setVisible(true);
 	    jFrame.add(plateau);
-	    
+
 
 	    jFrame.setSize(new Dimension(panelSnake.getSizeX()*40,panelSnake.getSizeY()*40));
 	    Dimension windowSize = jFrame.getSize();
 	    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	    Point centerPoint = ge.getCenterPoint();
-	    int dx = centerPoint.x - windowSize.width / 2 ;
-	    int dy = centerPoint.y - windowSize.height / 2 - 350;
+	    int dx = centerPoint.x - windowSize.width / 4 ;
+	    int dy = centerPoint.y - windowSize.height / 4 ;
 	    jFrame.setLocation(dx, dy);
-	    jFrame.toFront();
-	    //jFrame.requestFocus();
 	    jFrame.setAlwaysOnTop(true);
 	    jFrame.setVisible(true);
 	    
 	    
 	    }
+	
+	public void messageFinDeJeu() {  ///FAIRE FIN DE JEU
+		JLabel finjeu = new JLabel();
+		finjeu.setText("La partie est terminée !!!");
+
+		jFrame.add(finjeu);
+
+	}
 	
 		
 

@@ -11,14 +11,11 @@ public class FeaturesItem {
 
 
 
-	public FeaturesItem(int x, int y, ItemType itemType) {
-		
+	public FeaturesItem(int x, int y, ItemType itemType) {	
 		this.x = x;
 		this.y = y;
-		this.itemType = itemType;
-	
+		this.itemType = itemType;	
 	}
-	
 	
 	
 	
