@@ -7,7 +7,7 @@ import view.ViewCommand;
 //état de l'interface lorsque le jeu est en pause
 public class EtatPause implements Etat{
 	
-	ViewCommand viewcommand;
+	private ViewCommand viewcommand;
 	
 	public EtatPause(ViewCommand view) {
 		this.viewcommand=view;

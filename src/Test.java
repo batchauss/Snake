@@ -9,7 +9,7 @@ public class Test {
 	{
 		InputMap im = new InputMap( "./layouts/smallNoWall.lay");
 		Game g = new SnakeGame(5000,im);		
-		new ControllerSnakeGame(g,"./layouts/arena.lay");
+		new ControllerSnakeGame(g,"./layouts/smallNoWall.lay");
 		
 	}
 	

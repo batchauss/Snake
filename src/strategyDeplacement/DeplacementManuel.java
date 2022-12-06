@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 
 import utils.AgentAction;
 
+
+// (ancienne stratégie pour 1 joueur uniquement)
 public class DeplacementManuel implements DeplacementStrategie{
 	private AgentAction action=AgentAction.MOVE_UP;
 	

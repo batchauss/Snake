@@ -2,7 +2,7 @@ package controller;
 import model.*;
 
 public abstract class AbstractController {
-	Game g;
+	protected Game g;
 	
 	public AbstractController(Game g) {
 		this.g=g;

@@ -8,7 +8,7 @@ import view.ViewCommand;
 //état de l'interface lorsque le jeu est en cours 
 public class EtatPlay implements Etat{
 	
-	ViewCommand viewcommand;
+	private ViewCommand viewcommand;
 	
 	public EtatPlay(ViewCommand view) {
 		this.viewcommand=view;

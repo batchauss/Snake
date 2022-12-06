@@ -14,12 +14,12 @@ import utils.Position;
 
 public class SnakeGame extends Game {
 	
-    Factory fabrique = new SnakeFactory();
-	ArrayList<Agent> agent_list= new ArrayList<Agent>();
-	ArrayList<FeaturesItem> items_list= new ArrayList<FeaturesItem>();
-	int probaItem =5;
-	int tempsInvincible=0;
-	int tempsMalade=0;
+    private Factory fabrique = new SnakeFactory();
+    private ArrayList<Agent> agent_list= new ArrayList<Agent>();
+    private ArrayList<FeaturesItem> items_list= new ArrayList<FeaturesItem>();
+    private int probaItem =5;
+    private int tempsInvincible=0;
+    private int tempsMalade=0;
 	
 
 	public SnakeGame(int maxturn ,InputMap im) {
@@ -121,7 +121,8 @@ public class SnakeGame extends Game {
 							items_list.get(i).setY(r.nextInt(im.getSizeY()));
 						}
 						ag.getPositions().add(ag.getLastPosition());
-						ag.gotOnlyHead();		
+						ag.gotOnlyHead();
+						ag.augmenteScore();
 						
 						Random pItem = new Random();
 						if(pItem.nextInt(probaItem)==0)  randomItemProbability();

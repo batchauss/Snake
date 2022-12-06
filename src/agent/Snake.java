@@ -11,15 +11,16 @@ public class Snake implements Agent{
 	private Position pos;
 	private DeplacementStrategie strategie;  //strategie de deplacement (random, manuel,...)
 	
-	ArrayList<Position> positions;
+	private ArrayList<Position> positions;
 	
 	private AgentAction lastAction;
 	private boolean onlyHead; //détermine si le snake possède un corps ou non 
 	
-	ColorSnake colorSnake;
-	boolean isInvincible;
-	boolean isSick;
-	boolean isEliminated;
+	private ColorSnake colorSnake;
+	private boolean isInvincible;
+	private boolean isSick;
+	private boolean isEliminated;
+	private int score;
 
 	
 	public Snake (ArrayList<Position> positions, AgentAction lastAction, ColorSnake colorSnake, boolean isInvincible, boolean isSick) {
@@ -29,6 +30,7 @@ public class Snake implements Agent{
 		this.isInvincible = isInvincible;		
 		this.isSick = isSick;
 		this.isEliminated=false;
+		this.score=0;
 		pos=positions.get(0);
 		if(positions.size()==1) onlyHead=true;
 		else onlyHead=false;
@@ -53,27 +55,42 @@ public class Snake implements Agent{
 		
 	}
 	
+	
+	@Override
+	public int getScore() {
+		return score;
+	}
+
+	@Override
+	public void augmenteScore() {
+		++score;		
+	}
+	
+	
 	 @Override
 	 public void moveAgent(InputMap im) {
 		AgentAction action =strategie.chooseAction();
+		
+		
+	
 		
 		if(isLegalMove(action) ){
 			switch (action) { 	
 				case MOVE_UP:
 					setPosition(pos.getX(),pos.getY()-1);				
-					setLastAction(action);					
+					setLastAction(AgentAction.MOVE_UP);					
 					break;
 				case MOVE_DOWN:
 					setPosition(pos.getX(),pos.getY()+1);
-					setLastAction(action);
+					setLastAction(AgentAction.MOVE_DOWN);
 					break;
 				case MOVE_LEFT:
 					setPosition(pos.getX()-1,pos.getY());
-					setLastAction(action);
+					setLastAction(AgentAction.MOVE_LEFT);
 					break;
 				case MOVE_RIGHT:
 					setPosition(pos.getX()+1,pos.getY());
-					setLastAction(action);
+					setLastAction(AgentAction.MOVE_RIGHT);
 					break;
 
 			}
@@ -82,7 +99,9 @@ public class Snake implements Agent{
 			isLegalPos(action, im.get_walls());
 			toucheSonCorps();
 		}
-	}
+	 }
+		
+	
 	 
 	public void traverseCarte(InputMap im) {
 		if(pos.getY()<0) {
@@ -120,6 +139,8 @@ public class Snake implements Agent{
 		}
 		return true;
 	}
+	
+	
 	
 	public boolean isLegalPos(AgentAction action,boolean walls[][]) { //gestion des murs
 		if(!isInvincible) {
@@ -213,20 +234,27 @@ public class Snake implements Agent{
 	}
 
 	@Override
-	public void InteractionEntreAgents( ArrayList<Agent> agent_list) {  ///je sais pas si ca marche a revoir( parcourir liste agents 
+	public void InteractionEntreAgents( ArrayList<Agent> agent_list) {  
 		
-		for (Agent ag : agent_list) { /// changer "pos" par les positions de l'autre (parcourir les positions)
+		for (Agent ag : agent_list) {
 			if(!ag.equals(this)) {
 				for(Position p : ag.getPositions()) {
+					
 					if(this.positions.get(0).getX()==p.getX() &&this.positions.get(0).getY()==p.getY() && this.positions.size()==ag.getPositions().size() ) { // les 2 agents se rencontrent et sont de meme taille = elimination des 2
-						this.isEliminated=true;
-						ag.setEliminated(true);
+						if(this.isInvincible())  ag.setEliminated(true);
+						else if (ag.isInvincible()) this.isEliminated=true;
+						else {
+							this.isEliminated=true;
+							ag.setEliminated(true);
+						}
 					}
 					if(this.positions.get(0).getX()==p.getX() &&this.positions.get(0).getY()==p.getY() && this.positions.size()<ag.getPositions().size() ) { // les 2 agents se rencontrent et le 1er est plus petit = 1er eliminé
-						this.isEliminated=true;
+						if(this.isInvincible())  ag.setEliminated(true);
+						else this.isEliminated=true;
 					}
 					if(this.positions.get(0).getX()==p.getX() &&this.positions.get(0).getY()==p.getY() && this.positions.size()>ag.getPositions().size() ) { // les 2 agents se rencontrent et le 2e est plus petit = 2eme eliminé
-						ag.setEliminated(true);
+						if(ag.isInvincible())  this.setEliminated(true);
+						else ag.setEliminated(true);
 					}
 				}
 				
@@ -237,9 +265,9 @@ public class Snake implements Agent{
 
 	@Override
 	public void gotOnlyHead() {
-
 		onlyHead=false;
 	}
+
 
 	
 	

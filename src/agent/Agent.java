@@ -33,5 +33,8 @@ public interface Agent {
 	
 	public void InteractionEntreAgents( ArrayList<Agent> agent_list);
 	
+	public int getScore();
+	public void augmenteScore();
+	
 	
 }

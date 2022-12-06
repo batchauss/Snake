@@ -7,7 +7,7 @@ import view.ViewCommand;
 //état de l'interface au démarrage ou lorsqu'on restart le jeu
 public class EtatStart implements Etat {
 	
-	ViewCommand viewcommand;
+	private ViewCommand viewcommand;
 	
 	public EtatStart(ViewCommand view) {
 		this.viewcommand=view;
