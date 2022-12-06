@@ -16,4 +16,10 @@ public class ControllerSimpleGame extends AbstractController{
 	    vc.commande();
 	}
 
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

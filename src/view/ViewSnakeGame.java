@@ -35,6 +35,7 @@ public class ViewSnakeGame implements Observateur  {
 		this.agents=chemin_plateau.getStart_snakes();
 		panelSnake =new PanelSnakeGame(chemin_plateau.getSizeX(),chemin_plateau.getSizeY(), chemin_plateau.get_walls(), agents, chemin_plateau.getStart_items());
 		plateau = panelSnake;
+		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 
 	public JFrame getFrame() {

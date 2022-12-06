@@ -15,10 +15,7 @@ public abstract class AbstractController {
 		
 	}
 	
-	public void restart() {
-		start();
-		
-	}
+	public abstract void restart();
 	
 	
 	

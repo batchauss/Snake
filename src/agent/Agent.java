@@ -32,7 +32,6 @@ public interface Agent {
 	public boolean isLegalMove(AgentAction action);
 	
 	public void InteractionEntreAgents( ArrayList<Agent> agent_list);
-	//public void eatItem(ArrayList<FeaturesItem> items_list);
 	
 	
 }

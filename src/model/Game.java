@@ -16,7 +16,6 @@ public abstract class Game implements Runnable, Observable{
 	protected DeplacementStrategie stratJ1;
 	protected DeplacementStrategie stratJ2;
 	protected InputMap im;
-	//protected InputMap imStart ;
 	
 	protected List<Observateur> observateurs = new ArrayList<>();
 

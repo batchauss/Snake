@@ -30,11 +30,16 @@ public class ViewCommand implements Observateur{
 	public ViewCommand (Observable obs, AbstractController a) {
 		obs.enregistrerObservateur(this);
 		this.absC=a;
+		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	
 	public void setEtat (Etat e) {
 		etat=e;
+	}
+	
+	public JFrame getFrame() {
+		return jFrame;
 	}
 	
 	public void commande() {

@@ -17,7 +17,7 @@ public class SnakeGame extends Game {
     Factory fabrique = new SnakeFactory();
 	ArrayList<Agent> agent_list= new ArrayList<Agent>();
 	ArrayList<FeaturesItem> items_list= new ArrayList<FeaturesItem>();
-	int probaItem =10;
+	int probaItem =5;
 	int tempsInvincible=0;
 	int tempsMalade=0;
 	
