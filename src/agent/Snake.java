@@ -71,7 +71,10 @@ public class Snake implements Agent{
 	 public void moveAgent(InputMap im) {
 		AgentAction action =strategie.chooseAction();
 		
-		
+		if(!isLegalMove(action) ) {
+			action=inverserAction(action);
+
+		}
 	
 		
 		if(isLegalMove(action) ){
@@ -94,15 +97,36 @@ public class Snake implements Agent{
 					break;
 
 			}
-			traverseCarte( im);
-			positions.add(0,pos);
-			isLegalPos(action, im.get_walls());
-			toucheSonCorps();
+			
 		}
+		traverseCarte( im);
+		positions.add(0,pos);
+		isLegalPos(action, im.get_walls());
+		toucheSonCorps();
 	 }
+	 
 		
 	
-	 
+	//on inverse la direction du snake dans le cas ou il ne peut pas aller en arriere ( il ne peut pas reculer sur son corps) 
+	private AgentAction inverserAction(AgentAction action) {
+		switch (action) { 
+		case MOVE_UP:
+			action=AgentAction.MOVE_DOWN;
+			break;			
+		case MOVE_DOWN:
+			action=AgentAction.MOVE_UP;
+			break;
+		case MOVE_LEFT:
+			action=AgentAction.MOVE_RIGHT;
+			break;	
+		case MOVE_RIGHT:
+			action=AgentAction.MOVE_LEFT;
+			break;	
+			}
+		return action;
+	}
+
+	//possibilité de traverser la carte et d'apparaitre à l'opposé dans le cas ou il n'y a pas de mur (ou si le snake est invincible)
 	public void traverseCarte(InputMap im) {
 		if(pos.getY()<0) {
 			setPosition(pos.getX(), pos.getY()+im.getSizeY());
@@ -120,8 +144,10 @@ public class Snake implements Agent{
 		
 	}
 	
+	
+	//gestion du snake qui ne peut pas revenir en arriere
 	@Override
-	public boolean isLegalMove(AgentAction action) { //gestion du snake qui ne peut pas revenir en arriere
+	public boolean isLegalMove(AgentAction action) { 
 		if(!onlyHead)
 			switch (action) { 
 				case MOVE_UP:
@@ -141,8 +167,8 @@ public class Snake implements Agent{
 	}
 	
 	
-	
-	public boolean isLegalPos(AgentAction action,boolean walls[][]) { //gestion des murs
+	//gestion des murs
+	public boolean isLegalPos(AgentAction action,boolean walls[][]) { 
 		if(!isInvincible) {
 			
 			if(walls[pos.getX()][pos.getY()]) {
@@ -154,6 +180,7 @@ public class Snake implements Agent{
 	}
 	
 	
+	//élimination du snake si il touche son propre corps
 	public void toucheSonCorps() {
 		for(int i=1; i<positions.size();++i) {
 			if( pos.getX()==positions.get(i).getX() && pos.getY()==positions.get(i).getY() ) {
@@ -234,8 +261,7 @@ public class Snake implements Agent{
 	}
 
 	@Override
-	public void InteractionEntreAgents( ArrayList<Agent> agent_list) {  
-		
+	public void InteractionEntreAgents( ArrayList<Agent> agent_list) {  	
 		for (Agent ag : agent_list) {
 			if(!ag.equals(this)) {
 				for(Position p : ag.getPositions()) {
@@ -252,10 +278,7 @@ public class Snake implements Agent{
 						if(this.isInvincible())  ag.setEliminated(true);
 						else this.isEliminated=true;
 					}
-					if(this.positions.get(0).getX()==p.getX() &&this.positions.get(0).getY()==p.getY() && this.positions.size()>ag.getPositions().size() ) { // les 2 agents se rencontrent et le 2e est plus petit = 2eme eliminé
-						if(ag.isInvincible())  this.setEliminated(true);
-						else ag.setEliminated(true);
-					}
+
 				}
 				
 			}

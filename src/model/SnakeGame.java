@@ -45,6 +45,8 @@ public class SnakeGame extends Game {
 					agent_list.get(ag).moveAgent(im);
 					agent_list.get(ag).InteractionEntreAgents(agent_list);
 					eatItem(agent_list.get(ag), items_list);
+					//if(agent_list.get(ag).isLegalMove(agent_list.get(ag).getStrategy().chooseAction()))
+						agent_list.get(ag).getPositions().remove(agent_list.get(ag).getPositions().size()-1);
 					
 					//gestion du temps d'invincibilité et de maladie du snake par rapport au nombre de tours (20 tours)
 					if(agent_list.get(ag).isInvincible()) {
@@ -159,7 +161,7 @@ public class SnakeGame extends Game {
 				
 			}
 		}	
-		if(ag.isLegalMove(ag.getStrategy().chooseAction()))  ag.getPositions().remove(ag.getPositions().size()-1);
+		
 	}
 	
 	
