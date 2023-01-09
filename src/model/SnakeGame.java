@@ -39,14 +39,14 @@ public class SnakeGame extends Game {
 			System.out.println("Tour "+this.turn+" du jeu en cours");
 			System.out.println(gameContinue());
 		
-			for (int ag=0; ag<agent_list.size();++ag) {  //chaque agent effectue une action */
+			for (int ag=0; ag<agent_list.size();++ag) {  //chaque agent effectue une action 
 				
 				if(!agent_list.get(ag).elimination()) {
 					agent_list.get(ag).moveAgent(im);
 					agent_list.get(ag).InteractionEntreAgents(agent_list);
 					eatItem(agent_list.get(ag), items_list);
-					//if(agent_list.get(ag).isLegalMove(agent_list.get(ag).getStrategy().chooseAction()))
-						agent_list.get(ag).getPositions().remove(agent_list.get(ag).getPositions().size()-1);
+
+					agent_list.get(ag).getPositions().remove(agent_list.get(ag).getPositions().size()-1);
 					
 					//gestion du temps d'invincibilité et de maladie du snake par rapport au nombre de tours (20 tours)
 					if(agent_list.get(ag).isInvincible()) {
@@ -108,7 +108,7 @@ public class SnakeGame extends Game {
 	
 	
 
-	public void eatItem(Agent ag,ArrayList<FeaturesItem> items_list) {  //changer en eatItzm aves tous les items
+	public void eatItem(Agent ag,ArrayList<FeaturesItem> items_list) { 
 		
 		for ( int i=0; i<items_list.size();++i) {
 			Position posItem = new Position(items_list.get(i).getX(),items_list.get(i).getY());
@@ -164,7 +164,7 @@ public class SnakeGame extends Game {
 		
 	}
 	
-	
+	//gestion de l'apparition aléatoire des items spéciaux
 	public void randomItemProbability() {
 		int[] values = {1,2,3};
         int randIndex = new Random().nextInt(3);
@@ -194,7 +194,7 @@ public class SnakeGame extends Game {
         }
 	}
 	
-
+	// on vérifie si l'emplacement de l'objet est possible ( pas sur un mur ou sur un snake)
 	public boolean itemDeplacable(FeaturesItem item) {
 		for (Agent ag : agent_list) {
 			for (Position p: ag.getPositions()) {

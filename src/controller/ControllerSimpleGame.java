@@ -18,8 +18,7 @@ public class ControllerSimpleGame extends AbstractController{
 
 	@Override
 	public void restart() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 }

@@ -50,10 +50,7 @@ public class DeplacementManuel implements DeplacementStrategie{
 	}
 	@Override
 	
-	public AgentAction chooseAction() {
-		
+	public AgentAction chooseAction() {		
 		return action;
-	}
-
-	
+	}	
 }

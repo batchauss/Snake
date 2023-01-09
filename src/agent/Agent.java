@@ -23,7 +23,9 @@ public interface Agent {
 	public boolean isSick();
 	public void setSick(boolean isSick);
 	public void setInvincible(boolean isInvincible);
+	
 	public void gotOnlyHead();
+	
 	public AgentAction getLastAction();	
 	public Position getLastPosition();
 	

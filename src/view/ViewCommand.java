@@ -20,6 +20,7 @@ public class ViewCommand implements Observateur{
 	
 	//variable de mise a jour des tours
 	private int turn_update;
+	//mise a jour des scores
 	private JLabel scores= new JLabel();
 	
 	//controleur de ViewCommand
@@ -47,16 +48,16 @@ public class ViewCommand implements Observateur{
 	
 	public void commande() {
 				 
-		JPanel panel_button = new JPanel();
-		JPanel panel_slide = new JPanel();
-		JPanel panel_slide_text = new JPanel();
-		JPanel panel_score = new JPanel();
-		JPanel panel_touches = new JPanel();
+		JPanel panel_button = new JPanel(); //affichage des 4 boutons
+		JPanel panel_slide = new JPanel();  //affichage du slider de choix de vitesse
+		JPanel panel_slide_text = new JPanel(); //texte au dessus du slider
+		JPanel panel_score = new JPanel(); //affichage du score
+		JPanel panel_touches = new JPanel(); //affichage des commandes en bas de l'interface
 		 
 		GridLayout layout_global = new GridLayout(4,1); //fenetre divisée en deux partie
 		GridLayout layout_button = new GridLayout(1,4);	//haut de la fenetre	
 		GridLayout layout_commandes = new GridLayout(1,2); //bas de la fenetre
-		GridLayout layout_slide = new GridLayout(2,1); //
+		GridLayout layout_slide = new GridLayout(2,1); 
 		GridLayout layout_score = new GridLayout(1,1); //bas de la fenetre
 		GridLayout layout_touches = new GridLayout(1,2);
 		
@@ -87,7 +88,7 @@ public class ViewCommand implements Observateur{
 		restartButton.setEnabled(true);
 		pauseButton.setEnabled(false);
 		
-		//gestion du slider
+		//gestion du slider de choix de vitesse
 		JSlider slider = new JSlider(1, 10, 1);
 		JLabel texte_au_dessus_slide= new JLabel();
 		texte_au_dessus_slide.setText("Vitesse du jeu");
@@ -109,7 +110,7 @@ public class ViewCommand implements Observateur{
 		
 		
 		//gestion du score
-		scores.setText("Start  ou Step pour commencer la partie ");
+		scores.setText("Start  ou Step pour commencer la partie "); //ce message s'affiche au début de la partie
 		scores.setHorizontalAlignment(JLabel.CENTER);
 		scores.setVerticalAlignment(JLabel.CENTER);
 		panel_score.setLayout(layout_score);	
@@ -172,6 +173,8 @@ public class ViewCommand implements Observateur{
 		jFrame.setVisible(true);
     }
 
+	
+	
 	@Override
 	public void actualiser(int turn, ArrayList<Agent> agent_list,ArrayList<FeaturesItem>items_list) {
 		texte.setText("Turn: "+ turn);
@@ -179,7 +182,7 @@ public class ViewCommand implements Observateur{
 		else if(agent_list.size()==2) {
 			scores.setText("Scores J1: "+agent_list.get(0).getScore() +"   J2: "+agent_list.get(1).getScore() );
 		}
-		else if(agent_list.size()==0) scores.setText("La partie est terminée !"); 
+		else if(agent_list.size()==0) scores.setText("La partie est terminée !"); //message de fin de jeu si il n'y a plus d'agents sur le plateau
 	}
 }
 

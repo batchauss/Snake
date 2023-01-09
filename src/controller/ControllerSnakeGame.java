@@ -37,7 +37,8 @@ public class ControllerSnakeGame extends AbstractController{
 	}
 	
 	
-	
+
+	//fonction qui permet de recharger le jeu à son état initial
 	public void restart(){
 		vsg.getFrame().dispose();
 		vc.getFrame().dispose();
@@ -47,7 +48,6 @@ public class ControllerSnakeGame extends AbstractController{
 			startGame();
 		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

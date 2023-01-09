@@ -68,14 +68,14 @@ public class ViewSnakeGame implements Observateur  {
 	    
 	    }
 	
-	public void messageFinDeJeu() {  ///FAIRE FIN DE JEU
+/*	public void messageFinDeJeu() {  
 		JLabel finjeu = new JLabel();
 		finjeu.setText("La partie est terminée !!!");
 
 		jFrame.add(finjeu);
 
 	}
-	
+*/ 	
 		
 
 	   

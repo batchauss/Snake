@@ -33,7 +33,6 @@ public abstract class Game implements Runnable, Observable{
 	
 	public abstract void setStrategie(DeplacementStrategie s1,DeplacementStrategie s2);
 	
-	//getters sur les éléments de Game 
 	public int getTurn() {
 		return this.turn;
 	}
@@ -42,7 +41,6 @@ public abstract class Game implements Runnable, Observable{
 		return this.time;
 	}
 	
-	//setters sur les éléments de Game
 	public void setTurn(int turn) {
 		this.turn=turn;
 	}
@@ -61,7 +59,7 @@ public abstract class Game implements Runnable, Observable{
 	public void init() { 
 		turn =0;
 		isRunning=true;
-		initializeGame(im); //////ICI LA ICI LA ICI
+		initializeGame(im); 
 	}
 	
 	//tours du jeu pas a pas 

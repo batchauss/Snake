@@ -17,8 +17,7 @@ public abstract class AbstractController {
 	
 	public abstract void restart();
 	
-	
-	
+		
 	
 	public void step() {
 		g.step();
@@ -31,6 +30,7 @@ public abstract class AbstractController {
 	public void pause() {
 		g.pause();
 	}
+
 	
 	public void setSpeed(double speed) {
 		g.setTime(1000);

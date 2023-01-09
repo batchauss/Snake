@@ -12,6 +12,7 @@ import utils.AgentAction;
 public class DeplacementInteractif implements DeplacementStrategie{
 	private AgentAction action=AgentAction.MOVE_UP;
 	
+	// numJoueur va permettre de définir les touches en fonction du numéro du joueur
 	public DeplacementInteractif(int numJoueur,JFrame f) {
 		
 		KeyListener key = new KeyListener() {
@@ -19,6 +20,7 @@ public class DeplacementInteractif implements DeplacementStrategie{
 			public void keyPressed(KeyEvent e) {
 	
 				switch(numJoueur) {
+				//touches fléchées
 				case 1:
 					switch (e.getKeyCode())
 					{
@@ -39,6 +41,7 @@ public class DeplacementInteractif implements DeplacementStrategie{
 							break;
 					}
 					break;
+				//touches ZQSD	
 				case 2:
 					switch (e.getKeyCode())
 					{
@@ -60,11 +63,8 @@ public class DeplacementInteractif implements DeplacementStrategie{
 					}
 					break;
 					
-				}
-					
-				
-						
-				}
+				}					
+			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {}
@@ -75,10 +75,9 @@ public class DeplacementInteractif implements DeplacementStrategie{
 		};
 		f.addKeyListener(key);
 	}
-	@Override
 	
-	public AgentAction chooseAction() {
-		
+	@Override	
+	public AgentAction chooseAction() {		
 		return action;
 	}	
 }
